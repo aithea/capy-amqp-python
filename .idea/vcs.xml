@@ -2,10 +2,12 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/external/amqpcpp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/external/apy-amqp-cpp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/external/apy-common-cpp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/external/capy-amqp-cpp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/external/capy-common-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/external/capy-dispatchq" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/external/pybind11" vcs="Git" />
   </component>
 </project>
