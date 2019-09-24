@@ -9,7 +9,7 @@ from setuptools.command.build_ext import build_ext
 __version__ = '0.1.0'
 __capy_amqp_version__ = '0.5.4'
 
-darwin_flags = ['-mmacosx-version-min=10.12']
+darwin_flags = ['-mmacosx-version-min=10.14']
 cmake_darwin_flags = ['-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl']
 
 
@@ -39,6 +39,10 @@ class ExtensionWithLibrariesFromSources(Extension):
             kw['include_dirs'] = kw.get('include_dirs', []) + [
                 '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1'
             ]
+
+        pull_external("amqpcpp", "https://github.com/dnevera/AMQP-CPP")
+
+        pull_external("capy-dispatchq", "https://github.com/aithea/capy-dispatchq")
 
         pull_external("capy-common-cpp", "https://github.com/aithea/capy-common-cpp")
 
@@ -125,8 +129,11 @@ ext_modules = [
         '__capy_amqp',
         ['./src/amqp_bindings/bindings.cc'],
         include_dirs=[
+            'src/external/amqpcpp/include',
+            'src/external/capy-dispatchq/include',
             'src/external/capy-common-cpp/include',
             'src/external/capy-amqp-cpp/include',
+            'src/external/capy-amqp-cpp/external',
             'src/external/pybind11/include',
             '/usr/include',
             '/usr/local/include',
@@ -134,9 +141,12 @@ ext_modules = [
         language='c++',
         extra_compile_args=extra_compile_args,
         libraries_from_sources=[
+            ("amqpcpp", 'src/external/amqpcpp', __capy_amqp_version__),
+            ("capy_dispatchq", 'src/external/capy-dispatchq', __capy_amqp_version__),
             ("capy_common_cpp", 'src/external/capy-common-cpp', __capy_amqp_version__),
             ("capy_amqp_cpp", 'src/external/capy-amqp-cpp', __capy_amqp_version__),
-        ]
+        ],
+        libraries=['ssl', 'uv', 'z']
     ),
 ]
 
