@@ -1,28 +1,40 @@
 import unittest
 import time
-
-from __capy_amqp \
-    import Bind as Bind, \
-    FetchHandler as FetchHandler
+import capy_amqp
 
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):
 
-        class Fetcher(FetchHandler):
+        class Fetcher(capy_amqp.FetchHandler):
 
             def on_data(self, data):
                 print(data)
 
-        broker = Bind("amqp://guest:guest@localhost:5672/")
+            def on_error(self, code, message):
+                print(code, message)
 
-        action = dict()
-        action["action"] = "echo"
-        action["payload"] = {"ids": time.time(), "timestamp": time.time(), "i": 0}
+            def on_success(self):
+                print("on success")
 
-        key = "echo.ping"
+            def on_finalize(self):
+                print("on finalize")
 
-        broker.fetch(action, key, Fetcher())
+        broker = capy_amqp\
+            .Bind("amqp://guest:guest@localhost:5672/")\
+            .run()
+
+        action = dict({
+            'action':  'echo',
+            'payload': {"ids": int(time.time()), "timestamp": int(time.time()), "i": 0}
+        })
+
+        handler = Fetcher()
+
+        broker\
+            .fetch(action, "echo.ping", handler)
+
+        time.sleep(1)
 
         self.assertEqual(True, True)
 

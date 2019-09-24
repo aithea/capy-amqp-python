@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49085d0e-f3d2-4623-8284-0f657cedb4f8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/amqp_bindings/cast_json.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/capy_amqp/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/capy_amqp/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/amqp_bindings/bindings.cc" beforeDir="false" afterPath="$PROJECT_DIR$/src/amqp_bindings/bindings.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/binding_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/binding_test.py" afterDir="false" />
@@ -29,8 +30,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="11" column="43" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+            <state relative-caret-position="887">
+              <caret line="148" column="19" selection-start-line="148" selection-start-column="19" selection-end-line="148" selection-end-column="19" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -38,38 +39,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/amqp_bindings/bindings.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+            <state relative-caret-position="155">
+              <caret line="162" column="8" selection-start-line="162" selection-start-column="8" selection-end-line="162" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/include/nlohmann/json.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="874" selection-start-line="874" selection-end-line="874" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/amqp_bindings/cast_json.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/binding_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="322">
+              <caret line="32" column="15" lean-forward="true" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -78,10 +61,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.pyenv/versions/3.6.8/lib/python3.6/unittest/case.py">
+        <entry file="file://$PROJECT_DIR$/capy_amqp/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="604" selection-start-line="604" selection-end-line="604" />
+            <state relative-caret-position="34">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -112,12 +95,13 @@
       <list>
         <option value="$PROJECT_DIR$/Pipfile" />
         <option value="$PROJECT_DIR$/src/external/Readme.md" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/amqp_bindings/json.cc" />
-        <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/tests/binding_test.py" />
         <option value="$PROJECT_DIR$/src/amqp_bindings/cast_json.h" />
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/capy_amqp/__init__.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/amqp_bindings/bindings.cc" />
+        <option value="$PROJECT_DIR$/tests/binding_test.py" />
       </list>
     </option>
   </component>
@@ -159,6 +143,36 @@
             <path>
               <item name="capy-amqp-python" type="b2602c69:ProjectViewProjectNode" />
               <item name="capy-amqp-python" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="external" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capy-amqp-python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capy-amqp-python" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="external" type="462c0819:PsiDirectoryNode" />
+              <item name="capy-amqp-cpp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capy-amqp-python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capy-amqp-python" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="external" type="462c0819:PsiDirectoryNode" />
+              <item name="capy-amqp-cpp" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capy-amqp-python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capy-amqp-python" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="external" type="462c0819:PsiDirectoryNode" />
+              <item name="capy-amqp-cpp" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="capy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capy-amqp-python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capy-amqp-python" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -169,7 +183,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -248,34 +262,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.23 at 23h 53m 57s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 38m 15s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.23 at 23h 56m 32s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 38m 53s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.23 at 23h 57m 23s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 38m 59s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.23 at 23h 57m 57s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 39m 05s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 00h 00m 50s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 39m 20s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 00h 14m 15s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 39m 35s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_binding_test_MyTestCase_test_something - 2019.09.24 at 00h 17m 44s.xml">
-      <configuration name="Unittests for binding_test.MyTestCase.test_something" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 00h 20m 04s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 40m 20s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 00h 31m 21s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 41m 07s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 00h 31m 24s.xml">
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 42m 57s.xml">
+      <configuration name="Unittests in binding_test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_binding_test_py - 2019.09.24 at 17h 43m 45s.xml">
       <configuration name="Unittests in binding_test.py" configurationId="tests" />
     </history-entry>
   </component>
@@ -283,18 +297,18 @@
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.9268775" visible="true" weight="0.24947146" />
-      <window_info id="Structure" order="1" sideWeight="0.07312253" side_tool="true" visible="true" weight="0.24947146" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.87583894" visible="true" weight="0.24947146" />
+      <window_info id="Structure" order="1" sideWeight="0.12416107" side_tool="true" visible="true" weight="0.24947146" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3299363" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.355414" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24076433" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.49936306" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3299363" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.42038217" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.3299363" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -386,30 +400,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file:///usr/local/include/nlohmann/json.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/capy_amqp/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pipfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="11" column="43" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="122">
+          <caret line="874" selection-start-line="874" selection-end-line="874" />
         </state>
       </provider>
     </entry>
@@ -420,34 +414,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/include/nlohmann/json.h">
+    <entry file="file://$USER_HOME$/.pyenv/versions/3.6.8/lib/python3.6/unittest/loader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="874" selection-start-line="874" selection-end-line="874" />
+        <state relative-caret-position="78">
+          <caret line="164" column="20" lean-forward="true" selection-start-line="164" selection-start-column="20" selection-end-line="164" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pipfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/amqp_bindings/cast_json.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
+        <state relative-caret-position="-815">
           <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/binding_test.py">
+    <entry file="file://$PROJECT_DIR$/src/external/capy-amqp-cpp/include/capy/amqp_broker.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="729">
+          <caret line="152" column="25" selection-start-line="152" selection-start-column="25" selection-end-line="152" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/amqp_bindings/bindings.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+        <state relative-caret-position="155">
+          <caret line="162" column="8" selection-start-line="162" selection-start-column="8" selection-end-line="162" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/capy_amqp/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="887">
+          <caret line="148" column="19" selection-start-line="148" selection-start-column="19" selection-end-line="148" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/binding_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="32" column="15" lean-forward="true" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

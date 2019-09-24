@@ -145,7 +145,8 @@ ext_modules = [
             ("capy_dispatchq", 'src/external/capy-dispatchq', __capy_amqp_version__),
             ("capy_common_cpp", 'src/external/capy-common-cpp', __capy_amqp_version__),
             ("capy_amqp_cpp", 'src/external/capy-amqp-cpp', __capy_amqp_version__),
-        ]
+        ],
+        libraries=['ssl', 'uv', 'z']
     ),
 ]
 

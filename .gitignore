@@ -3,6 +3,7 @@ dist
 *.so
 *.dll
 src/external/capy*
+src/external/amqpcpp
 src/external/pybind11
 *.o
 *.egg-info
