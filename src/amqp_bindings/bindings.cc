@@ -28,6 +28,18 @@ struct FetchHandler {
 
 };
 
+struct ListenHandler {
+
+    virtual nlohmann::json on_data(const nlohmann::json request, const std::string routing_key) const { return {};}
+    virtual void on_error(int code, const std::string message) const {}
+    virtual void on_success() const {}
+    virtual void on_finalize() const {}
+
+    virtual ~ListenHandler() {}
+
+};
+
+
 struct PyFetchHandler : public FetchHandler {
 
 public:
@@ -74,8 +86,54 @@ public:
     }
 };
 
-class PyBroker {
+struct PyListenHandler : public ListenHandler {
 
+public:
+    /* Inherit the constructors */
+    using ListenHandler::ListenHandler;
+
+    /* Trampoline (need one for each virtual function) */
+    nlohmann::json on_data(const nlohmann::json request, const std::string routing_key) const override {
+        PYBIND11_OVERLOAD_PURE(
+            nlohmann::json,   /* Return type */
+            ListenHandler,    /* Parent class */
+            on_data,          /* Name of function in C++ (must match Python name) */
+            request,          /* Argument(s) */
+            routing_key
+        );
+    }
+
+    /* Trampoline (need one for each virtual function) */
+    void on_error(int code, const std::string message) const override {
+        PYBIND11_OVERLOAD_PURE(
+            void,             /* Return type */
+            ListenHandler,    /* Parent class */
+            on_error,         /* Name of function in C++ (must match Python name) */
+            code,             /* Argument(s) */
+            message           /* Argument(s) */
+        );
+    }
+
+    /* Trampoline (need one for each virtual function) */
+    void on_success() const override {
+        PYBIND11_OVERLOAD_PURE(
+            void,             /* Return type */
+            ListenHandler,    /* Parent class */
+            on_success        /* Name of function in C++ (must match Python name) */
+        );
+    }
+
+    /* Trampoline (need one for each virtual function) */
+    void on_finalize() const override {
+        PYBIND11_OVERLOAD_PURE(
+            void,            /* Return type */
+            ListenHandler,    /* Parent class */
+            on_finalize      /* Name of function in C++ (must match Python name) */
+        );
+    }
+};
+
+class PyBroker {
 
 public:
 
@@ -107,9 +165,70 @@ public:
         broker_ = std::make_unique<capy::amqp::Broker>(*broker);
     }
 
-    PyBroker& run() {
+    PyBroker& run(capy::amqp::Broker::Launch mode) {
          if (broker_) {
-            broker_->run();
+            broker_->run(mode);
+         }
+         return *this;
+    }
+
+    PyBroker& listen(const std::string& queue,
+                     const std::vector<std::string>& keys,
+                     ListenHandler *handler
+                     ){
+         std::cout << " q: " << queue << std::endl;
+         for(auto k: keys) {
+            std::cout << " k: " << k << std::endl;
+         }
+         if (broker_) {
+
+             broker_->listen(queue, keys)
+
+             .on_data([handler](const capy::amqp::Request &request, capy::amqp::Replay* replay) {
+
+                if (!handler) return;
+
+                replay->on_complete([](capy::amqp::Replay* replay){
+                    std::cout << " ... complete replay ... " << std::endl;
+                });
+
+                if (!request) {
+
+                    handler->on_error(request.error().value(), request.error().message());
+
+                } else {
+
+                    replay->message.value() = handler->on_data(request->message, request->routing_key);
+
+                }
+
+                replay->commit();
+            })
+
+            .on_success([handler](){
+
+                if (!handler) return;
+
+                handler->on_success();
+
+            })
+
+            .on_error([handler](const capy::Error &error) {
+
+                if (!handler) return;
+
+                handler->on_error(error.value(), error.message());
+
+            })
+
+            .on_finalize([handler](){
+
+                if (!handler) return;
+
+                handler->on_finalize();
+
+            });
+
          }
          return *this;
     }
@@ -123,11 +242,6 @@ public:
             broker_->fetch(message,routing_key)
 
             .on_data([handler](const capy::amqp::Payload &response){
-
-                if (response)
-                     std::cout << "response: ... " << response->dump(4) << std::endl;
-                 else
-                     std::cout << "response error: ... " << response.error() << std::endl;
 
                 if (!handler) return;
 
@@ -185,8 +299,13 @@ PYBIND11_MODULE(__capy_amqp, m) {
 
     m.doc() = "Capy amqp module...";
 
+    py::enum_<capy::amqp::Broker::Launch>(m, "Launch", py::arithmetic())
+        .value("sync",  capy::amqp::Broker::Launch::sync)
+        .value("async", capy::amqp::Broker::Launch::async)
+        .export_values();
+
     m.def(
-        "Bind",
+        "bind",
         &py_bind,
         "Bind amqp queue",
         "url"_a
@@ -199,12 +318,20 @@ PYBIND11_MODULE(__capy_amqp, m) {
         .def("on_success", &FetchHandler::on_success)
         .def("on_finalize", &FetchHandler::on_finalize);
 
+    py::class_<ListenHandler, PyListenHandler >(m, "ListenHandler")
+        .def(py::init<>())
+        .def("on_data", &ListenHandler::on_data)
+        .def("on_error", &ListenHandler::on_error)
+        .def("on_success", &ListenHandler::on_success)
+        .def("on_finalize", &ListenHandler::on_finalize);
+
     py::class_<PyBroker> py_broker_class(m, "Broker");
     py_broker_class
         .def(py::init<std::string, std::string, unsigned int>())
         .def(py::init<std::string, std::string>())
         .def(py::init<std::string, std::string>())
         .def("run", &PyBroker::run)
+        .def("listen", &PyBroker::listen)
         .def("fetch", &PyBroker::fetch);
         //.def_property("url", &PyBroker::get_url, &PyBroker::set_url);
 }

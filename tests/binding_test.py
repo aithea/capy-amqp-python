@@ -15,24 +15,25 @@ class MyTestCase(unittest.TestCase):
                 print(code, message)
 
             def on_success(self):
-                print("on success")
+                pass
 
             def on_finalize(self):
-                print("on finalize")
+                pass
 
         broker = capy_amqp\
-            .Bind("amqp://guest:guest@localhost:5672/")\
-            .run()
-
-        action = dict({
-            'action':  'echo',
-            'payload': {"ids": int(time.time()), "timestamp": int(time.time()), "i": 0}
-        })
+            .bind("amqp://guest:guest@localhost:5672/")\
+            .run(capy_amqp.Launch.async)
 
         handler = Fetcher()
 
-        broker\
-            .fetch(action, "echo.ping", handler)
+        for i in range(0, 100):
+            action = dict({
+                'action':  'echo',
+                'payload': {"ids": int(time.time()), "timestamp": int(time.time()), "i": i}
+            })
+
+            broker\
+                .fetch(action, "echo.ping", handler)
 
         time.sleep(1)
 
