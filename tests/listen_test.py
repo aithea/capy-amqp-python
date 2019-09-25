@@ -1,5 +1,4 @@
 import unittest
-import time
 import capy_amqp
 
 
@@ -27,6 +26,7 @@ class MyTestCase(unittest.TestCase):
         handler = Listener()
 
         while True:
+
             capy_amqp \
                 .bind("amqp://guest:guest@localhost:5672/")\
                 .listen("capy-test", ["echo.ping"], handler)\

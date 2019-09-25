@@ -4,10 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-capy_amqp = "0.1.0"
 
 [packages]
-numpy = "*"
+capy-amqp = {editable = true,path = "."}
 
 [requires]
 python_version = "3.6"
