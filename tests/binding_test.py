@@ -29,7 +29,8 @@ class MyTestCase(unittest.TestCase):
         for i in range(0, 100):
             action = dict({
                 'action':  'echo',
-                'payload': {"ids": int(time.time()), "timestamp": int(time.time()), "i": i}
+                'payload': {"ids": int(time.time()), "timestamp": int(time.time()), "i": i},
+                'users': [{1: '1'}, {2: '2'}, {3: '3'}]
             })
 
             broker\

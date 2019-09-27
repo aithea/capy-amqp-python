@@ -16,5 +16,7 @@ Acинхронный клиент к брокеру сообщений реал�
 ## Инсталяция пакета
 
 ```bash
+    git clone https://github.com/aithea/capy-amqp-python
+    cd capy-amqp-python
     pipenv install -e . 
 ```
