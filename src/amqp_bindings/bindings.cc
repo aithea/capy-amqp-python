@@ -25,8 +25,8 @@ struct FetchHandler {
     virtual void on_finalize() const {}
 
     virtual ~FetchHandler() {}
-
 };
+
 
 struct ListenHandler {
 

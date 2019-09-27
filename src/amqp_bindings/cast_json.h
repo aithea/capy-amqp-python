@@ -37,26 +37,42 @@ namespace pybind11::detail {
     private:
          nlohmann::json to_json_impl(py::handle obj)
          {
+
+            py::module py_json = py::module::import("json");
+
+            return nlohmann::json::parse(static_cast<std::string>(
+                py::str(py_json.attr("dumps")(obj))
+            ));
+
+#if __USE_DIRECT_JSON_IMPL__
+//
+// TODO: this version is crashing! Must be solve and optimize
+//
             if (obj.is_none())
             {
-                return nullptr;
+              return {};
             }
+
             if (py::isinstance<py::bool_>(obj))
             {
                 return obj.cast<bool>();
             }
+
             if (py::isinstance<py::int_>(obj))
             {
                 return obj.cast<long>();
             }
+
             if (py::isinstance<py::float_>(obj))
             {
                 return obj.cast<double>();
             }
+
             if (py::isinstance<py::str>(obj))
             {
                 return obj.cast<std::string>();
             }
+
             if (py::isinstance<py::tuple>(obj) || py::isinstance<py::list>(obj))
             {
                 nlohmann::json out;
@@ -75,7 +91,8 @@ namespace pybind11::detail {
                 }
                 return out;
             }
-            throw std::runtime_error("to_json not implemented for this type of object: " + obj.cast<std::string>());
+            throw std::runtime_error("to_json not implemented for this type of object: ...");
+#endif
         }
 
         static handle from_json_impl(const nlohmann::json& element) {

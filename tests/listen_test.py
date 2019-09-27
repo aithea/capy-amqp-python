@@ -12,7 +12,7 @@ class MyTestCase(unittest.TestCase):
             def on_data(self, request, routing_key):
                 print(request, routing_key)
                 self.index += 1
-                return {"response": True, "index": self.index}
+                return {"response": True, "index": self.index, 'users': [{1: '1'}, {2: '1'}, {3: '3'}]}
 
             def on_error(self, code, message):
                 print(code, message)
