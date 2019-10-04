@@ -17,28 +17,59 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-struct FetchHandler {
-
-    virtual void on_data(const nlohmann::json data) const {}
+struct PublishHandler {
     virtual void on_error(int code, const std::string message) const {}
     virtual void on_success() const {}
-    virtual void on_finalize() const {}
-
-    virtual ~FetchHandler() {}
+    virtual ~PublishHandler() {}
 };
 
 
-struct ListenHandler {
+struct CommonHandler: public PublishHandler {
+
+    virtual void on_finalize() const {}
+    virtual ~CommonHandler() {}
+};
+
+struct FetchHandler: public CommonHandler {
+
+    virtual void on_data(const nlohmann::json data) const {}
+    virtual ~FetchHandler() {}
+};
+
+struct ListenHandler: public CommonHandler {
 
     virtual nlohmann::json on_data(const nlohmann::json request, const std::string routing_key) const { return {};}
-    virtual void on_error(int code, const std::string message) const {}
-    virtual void on_success() const {}
-    virtual void on_finalize() const {}
-
     virtual ~ListenHandler() {}
 
 };
 
+struct PyPublishHandler : public PublishHandler {
+
+public:
+    /* Inherit the constructors */
+    using PublishHandler::PublishHandler;
+
+    /* Trampoline (need one for each virtual function) */
+    void on_error(int code, const std::string message) const override {
+        PYBIND11_OVERLOAD_PURE(
+            void,            /* Return type */
+            PublishHandler,  /* Parent class */
+            on_error,        /* Name of function in C++ (must match Python name) */
+            code,            /* Argument(s) */
+            message          /* Argument(s) */
+        );
+    }
+
+    /* Trampoline (need one for each virtual function) */
+    void on_success() const override {
+        PYBIND11_OVERLOAD_PURE(
+            void,            /* Return type */
+            PublishHandler,  /* Parent class */
+            on_success       /* Name of function in C++ (must match Python name) */
+        );
+    }
+
+};
 
 struct PyFetchHandler : public FetchHandler {
 
@@ -278,6 +309,30 @@ public:
 
     }
 
+    PyBroker& publish (const nlohmann::json& message,
+                const std::string& routing_key,
+                const PublishHandler* handler) {
+
+        if (broker_) {
+
+            auto error = broker_->publish(message,routing_key);
+
+            if (!handler) return *this;
+
+            if (error)
+                handler->on_error(error.value(), error.message());
+
+            else
+                handler->on_success();
+
+        }
+
+        return *this;
+
+    }
+
+    ~PyBroker() {}
+
 private:
 
     std::unique_ptr<capy::amqp::Broker> broker_;
@@ -311,6 +366,11 @@ PYBIND11_MODULE(__capy_amqp, m) {
         "url"_a
     );
 
+    py::class_<PublishHandler, PyPublishHandler>(m, "PublishHandler")
+        .def(py::init<>())
+        .def("on_error", &PublishHandler::on_error)
+        .def("on_success", &PublishHandler::on_success);
+
     py::class_<FetchHandler, PyFetchHandler >(m, "FetchHandler")
         .def(py::init<>())
         .def("on_data", &FetchHandler::on_data)
@@ -332,6 +392,7 @@ PYBIND11_MODULE(__capy_amqp, m) {
         .def(py::init<std::string, std::string>())
         .def("run", &PyBroker::run)
         .def("listen", &PyBroker::listen)
-        .def("fetch", &PyBroker::fetch);
+        .def("fetch", &PyBroker::fetch)
+        .def("publish", &PyBroker::publish);
         //.def_property("url", &PyBroker::get_url, &PyBroker::set_url);
 }

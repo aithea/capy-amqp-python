@@ -6,7 +6,7 @@ import sys
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 __capy_amqp_version__ = '0.5.4'
 
 darwin_flags = ['-mmacosx-version-min=10.14']
