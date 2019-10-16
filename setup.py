@@ -6,10 +6,10 @@ import sys
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __capy_amqp_version__ = '0.5.4'
 
-darwin_flags = ['-mmacosx-version-min=10.14']
+darwin_flags = ['-mmacosx-version-min=10.14', '-faligned-allocation']
 cmake_darwin_flags = ['-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl']
 
 
@@ -27,6 +27,7 @@ def pull_external(name, url, branch=None):
         subprocess.check_call(
             ['git', "-C", "src/external/" + name, "checkout", branch],
             env=os.environ.copy())
+
 
 class ExtensionWithLibrariesFromSources(Extension):
     """Win is unsupported"""
@@ -64,6 +65,8 @@ class ExtensionWithLibrariesFromSources(Extension):
                 ext_builder, lib_name, os.path.abspath(lib_path), lib_version
             )
 
+        print(libraries, libraries_dirs)
+
         return libraries, libraries_dirs
 
     @staticmethod
@@ -81,7 +84,7 @@ class ExtensionWithLibrariesFromSources(Extension):
         if platform.system() == 'Darwin':
             cmake_args += cmake_darwin_flags
 
-        build_args += ['--', '-j2']
+        build_args += ['--', '-j1']
 
         env = os.environ.copy()
 
@@ -98,7 +101,7 @@ class ExtensionWithLibrariesFromSources(Extension):
         subprocess.check_call(['cmake', '--build', '.'] + build_args,
                               cwd=build_temp)
 
-        return [build_temp, build_temp + '/lib']
+        return [build_temp, build_temp + '/lib', build_temp + '/bin']
 
     def check_cmake_version(self):
         try:
@@ -119,7 +122,7 @@ class BuildExt(build_ext):
         super().build_extension(ext)
 
 
-extra_compile_args = ['-std=c++17', '-faligned-allocation', '-DVERSION_INFO="{}"'.format(__version__)]
+extra_compile_args = ['-std=c++17', '-DVERSION_INFO="{}"'.format(__version__)]
 
 if platform.system() == 'Darwin':
     extra_compile_args = extra_compile_args + darwin_flags
@@ -141,12 +144,12 @@ ext_modules = [
         language='c++',
         extra_compile_args=extra_compile_args,
         libraries_from_sources=[
-            ("amqpcpp", 'src/external/amqpcpp', __capy_amqp_version__),
-            ("capy_dispatchq", 'src/external/capy-dispatchq', __capy_amqp_version__),
             ("capy_common_cpp", 'src/external/capy-common-cpp', __capy_amqp_version__),
+            ("capy_dispatchq", 'src/external/capy-dispatchq', __capy_amqp_version__),
+            ("amqpcpp", 'src/external/amqpcpp', __capy_amqp_version__),
             ("capy_amqp_cpp", 'src/external/capy-amqp-cpp', __capy_amqp_version__),
         ],
-        libraries=['ssl', 'uv', 'z']
+        libraries=['amqpcpp', 'capy_amqp_cpp', 'ssl', 'uv', 'z', 'amqpcpp', 'uv'],
     ),
 ]
 

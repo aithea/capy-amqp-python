@@ -2,6 +2,11 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/build/temp.linux-x86_64-3.6/capy_amqp_cpp/AMQP-CPP-prefix/src/AMQP-CPP" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/build/temp.linux-x86_64-3.6/capy_amqp_cpp/capy-common-cpp-prefix/src/capy-common-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/build/temp.linux-x86_64-3.6/capy_amqp_cpp/capy-common-cpp-prefix/src/capy-common-cpp-build/capy-dispatchq-prefix/src/capy-dispatchq" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/build/temp.linux-x86_64-3.6/capy_amqp_cpp/capy-dispatchq-prefix/src/capy-dispatchq" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/build/temp.linux-x86_64-3.6/capy_common_cpp/capy-dispatchq-prefix/src/capy-dispatchq" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/temp.macosx-10.14-x86_64-3.6/capy_amqp_cpp/capy-common-cpp-prefix/src/capy-common-cpp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/temp.macosx-10.14-x86_64-3.6/capy_amqp_cpp/capy-common-cpp-prefix/src/capy-common-cpp-build/capy-dispatchq-prefix/src/capy-dispatchq" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/build/temp.macosx-10.14-x86_64-3.6/capy_amqp_cpp/capy-dispatchq-prefix/src/capy-dispatchq" vcs="Git" />
