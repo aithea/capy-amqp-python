@@ -135,6 +135,7 @@ ext_modules = [
             'src/external/amqpcpp/include',
             'src/external/capy-dispatchq/include',
             'src/external/capy-common-cpp/include',
+            'src/external/capy-common-cpp/external',
             'src/external/capy-amqp-cpp/include',
             'src/external/capy-amqp-cpp/external',
             'src/external/pybind11/include',
