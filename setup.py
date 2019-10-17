@@ -6,7 +6,7 @@ import sys
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 __capy_amqp_version__ = '0.5.4'
 
 darwin_flags = ['-mmacosx-version-min=10.14', '-faligned-allocation']
@@ -135,6 +135,7 @@ ext_modules = [
             'src/external/amqpcpp/include',
             'src/external/capy-dispatchq/include',
             'src/external/capy-common-cpp/include',
+            'src/external/capy-common-cpp/external',
             'src/external/capy-amqp-cpp/include',
             'src/external/capy-amqp-cpp/external',
             'src/external/pybind11/include',
