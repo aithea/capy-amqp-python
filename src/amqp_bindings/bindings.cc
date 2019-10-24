@@ -10,9 +10,11 @@
 #include <tuple>
 #include <string>
 #include <stdio.h>
+#include <thread>
 
 #include "cast_json.h"
 #include "capy/amqp.h"
+#include "capy/dispatchq.h"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
@@ -340,6 +342,68 @@ private:
 };
 
 
+struct TaskHandler {
+    virtual void process() const {}
+    virtual ~TaskHandler() {}
+};
+
+struct PyTaskHandler : public TaskHandler {
+
+public:
+    /* Inherit the constructors */
+    using TaskHandler::TaskHandler;
+
+    /* Trampoline (need one for each virtual function) */
+    void process() const override {
+        PYBIND11_OVERLOAD_PURE(
+            void,            /* Return type */
+            TaskHandler,  /* Parent class */
+            process       /* Name of function in C++ (must match Python name) */
+        );
+    }
+
+};
+
+
+class PyTaskQueue {
+
+public:
+
+    PyTaskQueue(int size):
+    queue_(new capy::dispatchq::Queue(size))
+     {}
+
+     PyTaskQueue& put (const TaskHandler* handler) {
+
+            std::cerr << "0. start ..." << std::endl;
+
+            if (queue_) {
+                std::cerr << "1. start ..." << std::endl;
+                if (handler){
+                    std::cerr << "2. start ..." << std::this_thread::get_id() << std::endl;
+                    queue_->async([handler](){
+                        std::cerr << "3. start ..." << std::this_thread::get_id() << std::endl;
+                        handler->process();
+                        std::cerr << "4. start ..."<< std::this_thread::get_id()  << std::endl;
+                    });
+                }
+            }
+
+            return *this;
+
+        }
+
+
+    ~PyTaskQueue() {
+        delete queue_;
+        queue_ = nullptr;
+    }
+
+private:
+    capy::dispatchq::Queue *queue_;
+
+};
+
 static std::unique_ptr<PyBroker> py_bind(const std::string& url)
 {
     if (url.empty())
@@ -350,9 +414,14 @@ static std::unique_ptr<PyBroker> py_bind(const std::string& url)
     return std::unique_ptr<PyBroker>(new PyBroker(url));
 }
 
+static std::unique_ptr<PyTaskQueue> py_task_queue(unsigned int size)
+{
+    return std::unique_ptr<PyTaskQueue>(new PyTaskQueue(size));
+}
+
 PYBIND11_MODULE(__capy_amqp, m) {
 
-    m.doc() = "Capy amqp module...";
+    m.doc() = "Capy amqp module";
 
     py::enum_<capy::amqp::Broker::Launch>(m, "Launch", py::arithmetic())
         .value("sync",  capy::amqp::Broker::Launch::sync)
@@ -364,6 +433,13 @@ PYBIND11_MODULE(__capy_amqp, m) {
         &py_bind,
         "Bind amqp queue",
         "url"_a
+    );
+
+     m.def(
+        "task_queue",
+        &py_task_queue,
+        "Create new task queue",
+        "size"_a
     );
 
     py::class_<PublishHandler, PyPublishHandler>(m, "PublishHandler")
@@ -395,4 +471,17 @@ PYBIND11_MODULE(__capy_amqp, m) {
         .def("fetch", &PyBroker::fetch)
         .def("publish", &PyBroker::publish);
         //.def_property("url", &PyBroker::get_url, &PyBroker::set_url);
+
+
+    py::class_<TaskHandler, PyTaskHandler>(m, "TaskHandler")
+        .def(py::init<>())
+        .def("process", &TaskHandler::process);
+
+
+    py::class_<PyTaskQueue> py_task_queue_class(m, "TaskQueue");
+    py_task_queue_class
+        .def(py::init<unsigned int>())
+        .def("put", &PyTaskQueue::put);
+
+
 }
