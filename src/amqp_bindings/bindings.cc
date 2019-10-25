@@ -343,7 +343,7 @@ private:
 
 
 struct TaskHandler {
-    virtual void process() const {}
+    virtual void process(py::kwargs args) {}
     virtual ~TaskHandler() {}
 };
 
@@ -354,14 +354,22 @@ public:
     using TaskHandler::TaskHandler;
 
     /* Trampoline (need one for each virtual function) */
-    void process() const override {
+    void process(py::kwargs args) override {
+
+        std::shared_ptr<py::kwargs> args_copy(new py::kwargs(args));
+
+        args_copies_.push_back(args_copy);
+
         PYBIND11_OVERLOAD_PURE(
-            void,            /* Return type */
+            void,         /* Return type */
             TaskHandler,  /* Parent class */
-            process       /* Name of function in C++ (must match Python name) */
+            process,      /* Name of function in C++ (must match Python name) */
+            *args_copy
         );
     }
 
+private:
+    std::vector<std::shared_ptr<py::kwargs>> args_copies_;
 };
 
 
@@ -373,30 +381,29 @@ public:
     queue_(new capy::dispatchq::Queue(size))
      {}
 
-     PyTaskQueue& put (const TaskHandler* handler) {
-
-            std::cerr << "0. start ..." << std::endl;
+     PyTaskQueue& put (TaskHandler* handler, py::kwargs kwargs) {
 
             if (queue_) {
-                std::cerr << "1. start ..." << std::endl;
-                if (handler){
-                    std::cerr << "2. start ..." << std::this_thread::get_id() << std::endl;
-                    queue_->async([handler](){
-                        std::cerr << "3. start ..." << std::this_thread::get_id() << std::endl;
-                        handler->process();
-                        std::cerr << "4. start ..."<< std::this_thread::get_id()  << std::endl;
+                if (handler) {
+                    queue_->async([handler, kwargs](){
+                        handler->process(kwargs);
                     });
                 }
             }
+            else {
+                throw std::runtime_error("TaskQueue is broken...");
+            }
 
             return *this;
-
         }
 
 
     ~PyTaskQueue() {
-        delete queue_;
-        queue_ = nullptr;
+        if (queue_) {
+            queue_->stop();
+            delete queue_;
+            queue_ = nullptr;
+        }
     }
 
 private:
@@ -482,6 +489,4 @@ PYBIND11_MODULE(__capy_amqp, m) {
     py_task_queue_class
         .def(py::init<unsigned int>())
         .def("put", &PyTaskQueue::put);
-
-
 }
